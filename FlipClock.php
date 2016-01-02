@@ -23,11 +23,17 @@ class FlipClock extends \yii\base\Widget
     /** @var int Time */
     public $time = 120;
     
+    /** @var bool Use as countdown */
+    public $countdown = false;
+    
     /** @var array Additional options for FlipClock */
     public $options = [];
     
     public function init()
     {
+        if ($this->countdown)
+            $this->options['countdown'] = 'true';
+        
         if (!empty($this->options))
             $this->optionsToJS();
         else
@@ -37,10 +43,11 @@ class FlipClock extends \yii\base\Widget
     public function run()
     {
         return $this->render('flipclock', [
-            'name'    => $this->name,
-            'id'      => $this->id,
-            'time'    => $this->time,
-            'options' => $this->options,
+            'name'      => $this->name,
+            'id'        => $this->id,
+            'time'      => $this->time,
+            'options'   => $this->options,
+            'countdown' => $this->countdown,
         ]);
     }
     
