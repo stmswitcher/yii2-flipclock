@@ -1,0 +1,24 @@
+{
+  "name": "stmswitcher/yii2-flipclock",
+  "description": "Yii2 FlipClock wrapper",
+  "type": "yii2-extension",
+  "keywords": ["flipclock", "yii2"],
+  "minimum-stability": "dev",
+  "license": "GNU GPL v2",
+  "authors": [
+    {
+      "name": "Denis Alexandrov",
+      "email": "stm.switcher@gmail.com",
+      "homepage": "http://github.com/stmswitcher"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "stmswitcher\\flipclock\\": "/"
+    }
+  }
+}
