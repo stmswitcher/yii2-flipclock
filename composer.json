@@ -3,7 +3,6 @@
   "description": "Yii2 FlipClock wrapper",
   "type": "yii2-extension",
   "keywords": ["flipclock", "yii2"],
-  "minimum-stability": "dev",
   "license": "GNU GPL v2",
   "authors": [
     {
