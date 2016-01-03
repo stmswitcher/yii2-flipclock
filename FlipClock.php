@@ -10,49 +10,65 @@ namespace stmswitcher\flipclock;
  * 
  * @author Denis Alexandrov <stm.switcher@gmail.com>
  * @date   03.01.2016 00:01:19
+ * 
+ * @todo add callbacks
  */
 
 class FlipClock extends \yii\base\Widget
 {
-    /** @var string Name of FlipClock instance */
+    /** 
+     * Name of FlipClock instance
+     * @var string
+     */
     public $name = 'flipclock';
     
-    /** @var string ID selector for FlipClock div */
+    /**
+     * ID selector for FlipClock div
+     * @var string
+     */
     public $id;
     
-    /** @var int Time */
-    public $time = 120;
-    
-    /** @var bool Display days */
-    public $daily = true;
-    
-    /** @var bool Use as countdown */
+    /**
+     * Use as countdown
+     * @var bool
+     */
     public $countdown = false;
     
-    /** @var string|bool Custom time */
+    /**
+     * Countdown time
+     * @var int
+     */
+    public $time = 120;
+    
+    /**
+     * Display days
+     * @var bool
+     */
+    public $daily = true;
+    
+    /**
+     * Custom time
+     * @var string|bool
+     */
     public $custom_time = false;
     
-    /** @var array Additional options for FlipClock */
-    public $options = [];
+    /**
+     * Additional options for FlipClock
+     * @var array|null
+     */
+    public $options = null;
     
     public function init()
     {
-        if (!$this->id)
-            $this->id = $this->name;
-        
         if ($this->custom_time)
             $this->checkTime();
         
-        if ($this->daily && !isset($this->options['clockface']))
-            $this->options['clockface'] ='DailyCounter';
+        $this->checkId();
+        $this->setDaily();
+        $this->setCountdown();
         
-        if ($this->countdown)
-            $this->options['countdown'] = 'true';
-        
-        if (!empty($this->options))
+        if (!is_null($this->options))
             $this->optionsToJS();
-        else
-            $this->options = null;
     }
     
     public function run()
@@ -65,6 +81,33 @@ class FlipClock extends \yii\base\Widget
             'custom_time' => $this->custom_time,
             'countdown'   => $this->countdown,
         ]);
+    }
+    
+    /**
+     * If no ID specified the name will be used as ID
+     */
+    private function checkId()
+    {
+        if (!$this->id)
+            $this->id = $this->name;
+    }
+    
+    /**
+     * Adds clockface option to show days if daily property is set to TRUE
+     */
+    private function setDaily()
+    {
+        if ($this->daily && !isset($this->options['clockface']))
+            $this->options['clockface'] ='DailyCounter';
+    }
+    
+    /**
+     * Adds countdown option
+     */
+    private function setCountdown()
+    {
+        if ($this->countdown)
+            $this->options['countdown'] = 'true';
     }
     
     /**
@@ -82,10 +125,13 @@ class FlipClock extends \yii\base\Widget
     /**
      * Check custom time format
      * 
-     * @throws \Exception if format is invalid
+     * @throws \Exception if format is invalid or clockface is not set
      */
     private function checkTime()
     {
+        if (!isset($this->options['clockface']))
+            throw new \Exception('Clockface property have to be specified to use custom time.');
+        
         if (!preg_match('#^\d{2}:\d{2}:\d{2}\s\w{2}$#', $this->custom_time))
             throw new \Exception('Invalid custom time format. Should be `12:12:12 am`.');
     }

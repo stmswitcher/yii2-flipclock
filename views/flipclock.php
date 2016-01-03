@@ -9,33 +9,43 @@
  * @var bool $countdown
  * @var bool|string $custom_time
  * @var array $options
+ * @var \yii\web\View $this
  */
 
 \stmswitcher\flipclock\assets\FlipClockAsset::register($this);
 
-/** @var string countdown code */
-$cd = null;
+/**
+ * Custom date
+ * @var string
+ */
+$custom_date = null;
 
-/** @var string js vars */
+/**
+ * JS variables
+ * @var string
+ */
 $vars = "var $name;\n";
 
+// Set custom date to use countdown
 if ($countdown) {
-    $cd = "dateDiff, ";
+    $custom_date = "dateDiff, ";
     $vars .= <<<JS
         var currDate = new Date();
         var dateDiff = currDate.getTime() + $time - currDate.getTime();
 JS;
 }
 
+// Set custom time
 if ($custom_time) {
     $vars .= "var customTime = new Date('2011-02-15 $custom_time');\n";
-    $cd = "customTime, ";
+    $custom_date = "customTime, ";
 }
 
+// Build JS
 $js = <<<JS
     $vars
     $(document).ready(function(){
-        $name = $('#$id').FlipClock($cd{
+        $name = $('#$id').FlipClock($custom_date{
             $options
         });
     });
