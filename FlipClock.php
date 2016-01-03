@@ -29,6 +29,9 @@ class FlipClock extends \yii\base\Widget
     /** @var bool Use as countdown */
     public $countdown = false;
     
+    /** @var string|bool Custom time */
+    public $custom_time = false;
+    
     /** @var array Additional options for FlipClock */
     public $options = [];
     
@@ -37,8 +40,11 @@ class FlipClock extends \yii\base\Widget
         if (!$this->id)
             $this->id = $this->name;
         
-        if ($this->daily)
-            $this->options['clockFace'] ='DailyCounter';
+        if ($this->custom_time)
+            $this->checkTime();
+        
+        if ($this->daily && !isset($this->options['clockface']))
+            $this->options['clockface'] ='DailyCounter';
         
         if ($this->countdown)
             $this->options['countdown'] = 'true';
@@ -52,11 +58,12 @@ class FlipClock extends \yii\base\Widget
     public function run()
     {
         return $this->render('flipclock', [
-            'name'      => $this->name,
-            'id'        => $this->id,
-            'time'      => $this->time,
-            'options'   => $this->options,
-            'countdown' => $this->countdown,
+            'name'        => $this->name,
+            'id'          => $this->id,
+            'time'        => $this->time,
+            'options'     => $this->options,
+            'custom_time' => $this->custom_time,
+            'countdown'   => $this->countdown,
         ]);
     }
     
@@ -70,5 +77,16 @@ class FlipClock extends \yii\base\Widget
             $options[] = "$option: '$value'";
         }
         $this->options = implode(",\n", $options);
+    }
+    
+    /**
+     * Check custom time format
+     * 
+     * @throws \Exception if format is invalid
+     */
+    private function checkTime()
+    {
+        if (!preg_match('#^\d{2}:\d{2}:\d{2}\s\w{2}$#', $this->custom_time))
+            throw new \Exception('Invalid custom time format. Should be `12:12:12 am`.');
     }
 }

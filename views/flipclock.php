@@ -7,6 +7,7 @@
  * @var string $id
  * @var int $time
  * @var bool $countdown
+ * @var bool|string $custom_time
  * @var array $options
  */
 
@@ -16,9 +17,7 @@
 $cd = null;
 
 /** @var string js vars */
-$vars = <<<JS
-    var $name;
-JS;
+$vars = "var $name;\n";
 
 if ($countdown) {
     $cd = "dateDiff, ";
@@ -26,6 +25,11 @@ if ($countdown) {
         var currDate = new Date();
         var dateDiff = currDate.getTime() + $time - currDate.getTime();
 JS;
+}
+
+if ($custom_time) {
+    $vars .= "var customTime = new Date('2011-02-15 $custom_time');\n";
+    $cd = "customTime, ";
 }
 
 $js = <<<JS
