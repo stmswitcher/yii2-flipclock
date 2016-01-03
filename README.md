@@ -17,3 +17,4 @@ use \stmswitcher\flipclock\FlipClock;
     <?= FlipClock::widget() ?>
 </div>
 ```
+Check [EXAMPLE.md](https://github.com/stmswitcher/yii2-flipclock/blob/master/EXAMPLE.md) for more info.
