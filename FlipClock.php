@@ -97,8 +97,8 @@ class FlipClock extends \yii\base\Widget
      */
     private function setDaily()
     {
-        if ($this->daily && !isset($this->options['clockface']))
-            $this->options['clockface'] ='DailyCounter';
+        if ($this->daily && !isset($this->options['clockFace']))
+            $this->options['clockFace'] ='DailyCounter';
     }
     
     /**
@@ -129,7 +129,7 @@ class FlipClock extends \yii\base\Widget
      */
     private function checkTime()
     {
-        if (!isset($this->options['clockface']))
+        if (!isset($this->options['clockFace']))
             throw new \Exception('Clockface property have to be specified to use custom time.');
         
         if (!preg_match('#^\d{2}:\d{2}:\d{2}\s\w{2}$#', $this->custom_time))
