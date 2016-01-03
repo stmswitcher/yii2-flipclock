@@ -17,11 +17,14 @@ class FlipClock extends \yii\base\Widget
     /** @var string Name of FlipClock instance */
     public $name = 'flipclock';
     
-    /** @var string ID selector to place FlipClock */
-    public $id = 'flipclock';
+    /** @var string ID selector for FlipClock div */
+    public $id;
     
     /** @var int Time */
     public $time = 120;
+    
+    /** @var bool Display days */
+    public $daily = true;
     
     /** @var bool Use as countdown */
     public $countdown = false;
@@ -31,6 +34,12 @@ class FlipClock extends \yii\base\Widget
     
     public function init()
     {
+        if (!$this->id)
+            $this->id = $this->name;
+        
+        if ($this->daily)
+            $this->options['clockFace'] ='DailyCounter';
+        
         if ($this->countdown)
             $this->options['countdown'] = 'true';
         
