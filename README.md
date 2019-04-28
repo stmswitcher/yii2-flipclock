@@ -4,7 +4,7 @@ This is a wrapper extension of [FlipClock.js](http://flipclockjs.com/) for [Yii2
 # Installation
 The preferred way to install this extension is to use [composer](http://getcomposer.org/):
 ```
-composer require "stmswitcher/yii2-flipclock" "dev-master"
+composer require "stmswitcher/yii2-flipclock:^0.1"
 ```
 
 # Basic usage
@@ -16,5 +16,5 @@ use \stmswitcher\flipclock\FlipClock;
 <div class="somewrapper">
     <?= FlipClock::widget() ?>
 </div>
-```
+````
 Check [EXAMPLE.md](https://github.com/stmswitcher/yii2-flipclock/blob/master/EXAMPLE.md) for more info.
